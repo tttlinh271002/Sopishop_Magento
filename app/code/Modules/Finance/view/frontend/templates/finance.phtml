@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<meta name="description" content="Tỷ giá các ngoại tệ của Ngân hàng thương mại cổ phần Ngoại thương Việt Nam" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<style>
+		    table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    border-spacing: 0;
+		    max-width: 85%;
+		    margin-left: auto;
+		    margin-right: auto;
+		    }
+		    tr.cotdau {
+		        background: #ccddff;
+		    }
+		    tr.info {
+		    background: #f2f2f2;
+		    }
+		    .table tfoot {
+		    background: #ffd9b3;
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="container-fluid bg-grey">	
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-hover">
+						<thead>
+							<tr class="cotdau">
+								<th>MÃ NGOẠI TỆ</th>
+								<th>TÊN NGOẠI TỆ</th>
+								<th>MUA TIỀN MẶT</th>
+								<th>MUA CHUYỂN KHOẢN</th>
+								<th>BÁN</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+								function check_broken_link($url){
+									$handle   = curl_init($url);
+									if (false === $handle)
+									{
+										return false;
+									}
+									curl_setopt($handle, CURLOPT_HEADER, false);
+									curl_setopt($handle, CURLOPT_FAILONERROR, true);  // this works
+									curl_setopt($handle, CURLOPT_NOBODY, true);
+									curl_setopt($handle, CURLOPT_RETURNTRANSFER, false);
+									$connectable = curl_exec($handle);
+									curl_close($handle);    
+									return $connectable;
+								}
+								$url = "https://portal.vietcombank.com.vn/Usercontrols/TVPortal.TyGia/pXML.aspx?b=68";
+								$thoi_gian_cap_nhat = "";
+								if(check_broken_link($url) === TRUE){
+									$xml = file_get_contents($url);
+									$data = simplexml_load_string($xml);
+									if ($data === false) {
+										echo '<tr class="danger"><th colspan="5" style="text-align:center"><h5>DỮ LIỆU BỊ LỖI</h5></th></tr>';
+									}
+									else {										
+										$thoi_gian_cap_nhat = $data->DateTime;
+										$ty_gia = $data->Exrate;
+										$i=1;
+										foreach($ty_gia as $ngoai_te) {
+											$ma = $ngoai_te['CurrencyCode'];
+											$ten = $ngoai_te['CurrencyName'];
+											$gia_mua = $ngoai_te['Buy'];
+											$gia_chuyen_khoan = $ngoai_te['Transfer'];
+											$gia_ban = $ngoai_te['Sell'];
+											$class_color = "success";
+											if($i%2 == 0){ $class_color = "info";}
+											echo "<tr class='".$class_color."'>";
+												echo "<td>".$ma."</td>";
+												echo "<td>".$ten."</td>";
+												echo "<td>".$gia_mua."</td>";
+												echo "<td>".$gia_chuyen_khoan."</td>";
+												echo "<td>".$gia_ban."</td>";
+											echo "</tr>";
+											$i++;
+										}
+									}
+								}
+								else{
+									echo '<tr class="danger"><th colspan="5" style="text-align:center"><h5>KHÔNG THỂ KẾT NỐI ĐẾN MÁY CHỦ VIETCOMBANK</h5></th></tr>';
+								}
+							?>
+					    </tbody>
+						
+						<tfoot>
+							<?php if($thoi_gian_cap_nhat != ""){
+								$thoi_gian_cap_nhat = date_format(date_create($thoi_gian_cap_nhat),'H:i:s d-m-Y');
+								$thoi_gian_cap_nhat = explode(' ', $thoi_gian_cap_nhat);
+								$gio = $thoi_gian_cap_nhat[0];
+								$ngay = $thoi_gian_cap_nhat[1];
+							?>
+								<tr>
+									<th colspan="5">Tỷ giá được cập nhật lúc <?php echo $gio; ?> ngày <?php echo $ngay; ?> và chỉ mang tính chất tham khảo.</th>
+								</tr>
+							<?php } ?>
+						</tfoot>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-24587993-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+	</body>
+</html>

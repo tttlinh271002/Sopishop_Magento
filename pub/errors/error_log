@@ -1,0 +1,2 @@
+[15-Dec-2022 09:37:05 UTC] PHP Parse error:  syntax error, unexpected ''directories'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/sopishop/public_html/app/etc/env.php on line 79
+[15-Dec-2022 09:37:06 UTC] PHP Parse error:  syntax error, unexpected ''directories'' (T_CONSTANT_ENCAPSED_STRING), expecting ']' in /home/sopishop/public_html/app/etc/env.php on line 79

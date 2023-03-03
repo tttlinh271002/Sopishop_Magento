@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+      .bodi{
+          color: rgb(7, 1, 1);
+          background: linear-gradient(90deg, rgba(119,111,255,1) 0%, rgba(210,210,255,1) 50%, rgba(0,212,255,1) 100%);
+          font-family: 'Times New Roman', serif;
+          height: 100vh;
+      }
+      .container_header{
+          font-size: 20px;
+          align-items: center;
+          justify-content: space-around;
+          margin: 20px 40px 20px 40px ;
+      }
+      @media only screen and (max-width: 424px) {
+          .date {
+              margin-bottom: 20px;
+          }
+      }
+
+      @media only screen and (min-width: 426px) {
+          .container_header{
+              font-size: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: space-around;
+              margin: 20px 40px 20px 40px ;
+          }
+        }
+      .date span{
+          font-weight: bold;
+      }
+      .search input, .search button {
+          text-align: center;
+          padding: 10px;
+          border-radius: 5px;
+          border: 1px solid black;
+      }
+      .search button:hover {
+          cursor: pointer;
+          transform: scale(1.02);
+      }
+      .search input:hover {
+          border: none;
+      }
+      .temp {
+          font-size: 50px;
+          font-weight: bold;
+      }
+      h2#cityName {
+          margin-top: 25px;
+          font-size: 35px;
+      }
+      .container_content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+      .container_content img, .container_content .temp, .container_content .description_content {
+          width: 20%;
+      }
+      .description_content {
+          font-size: 20px;
+      }
+      .description {
+          text-transform: capitalize;
+          margin-left: 8px;
+      }
+      .container_content img, .container_content .temp, .container_content .description_content {
+          display: flex;
+          flex-direction: column;
+          width: 350px;
+      }
+      #cityName {
+          text-transform: capitalize;
+      }
+
+      .weather_container {
+          display: flex;
+          justify-content: space-around;
+      }
+      .icon_container {
+          width: 100%;
+      }
+      @media only screen and (min-width: 426px) {
+          .icon_container {
+              width: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          }
+        }
+
+      .icons{
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 20px;
+          border: 3px solid rgb(48, 47, 47);
+          border-radius: 10px;
+      }
+
+      .image{
+          height: 140px;
+          width: 100%;
+      }
+
+      .imgClass{
+          height: 140px;
+          width: 100%;
+      }
+
+      .weather{
+          font-size: 18px;
+          margin: 5px;
+          border-radius: 5px;
+          text-align: center;
+          font-weight: bold;
+      }
+
+      .minValues{
+          font-size: 17px;
+          text-align: center;
+          display: inline-block;
+          border-radius: 5px;
+          height: 25px;
+          width: 90px;
+          margin: 0;
+          margin-bottom: 5px;
+          margin-left: 5px;
+      }
+
+
+      .maxValues{
+          font-size: 17px;
+          text-align: center;
+          display: inline-block;
+          border-radius: 5px;
+          height: 25px;
+          width: 90px;
+          margin: 0;
+          margin-bottom: 5px;
+          margin-left: 5px;
+      }
+      .col1 {
+          line-height: 1.4;
+          text-align: left;
+      }
+      .description {
+          font-size: 20px;
+      }
+      .container_content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 210px;
+          /* width: 0%; */
+      }
+      h2#cityName {
+          margin-top: 25px;
+          font-size: 35px;
+          margin-bottom: 10px;
+      }
+      .ima {
+          margin-left: 70px;
+      }
+      span.temp {
+          transform: translateX(-76px);
+      }
+      .date {
+          font-size: 20px;
+      }
+      .search {
+          width: 40%;
+      }
+      input#cityInput {
+          width: 55%;
+          font-size: 18px;
+      }
+      .bodi {
+          height: auto;
+          width: 83%;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          margin-left: auto;
+          margin-right: auto;
+          background: cadetblue;
+          border-radius: 39px;
+      }
+    </style>
+  </head>
+  <body onload="DefaultScreen()">
+    <div class="bodi">
+      <div class="main">
+        <div class="card">
+          <center>
+            <div class="container_header">
+              <div class="search">
+                <input type="text" id="cityInput" placeholder="Search" />
+                <button id="timtiet" onclick="GetInfo()">Tìm kiếm</button>
+              </div>
+            </div>
+            <div class="date"><span class="monthday"></span></div>
+            <h2 id="cityName">London</h2>
+            <div class="description">Cloudy</div>
+            <div class="container_content">
+              <div class="ima">
+                <img
+                  src="https://openweathermap.org/img/wn/04n.png"
+                  alt=""
+                  class="icon"
+                />
+              </div>
+              <div style="min-width: 20px;"><span class="temp"></span></div>
+              <div class="description_content">
+                <div class="col1">
+                  <div><span class="sunrise"></span></div>
+                  <div><span class="sunset"></span></div>
+                  <div class="humidity">Humidity: 43%</div>
+                  <div class="wind">Wind speed: 2.96 km/h</div>
+                </div>
+              </div>
+            </div>
+          </center>
+        </div>
+
+        <div id="weatherContainer" class="weather_container">
+          <div id="iconsContainer" class="icon_container">
+            <div class="icons">
+              <p class="weather" id="day1"></p>
+              <div class="image">
+                <img src="dots.png" class="imgClass" id="img1" />
+              </div>
+              <p class="minValues" id="day1Min">Loading...</p>
+              <p class="maxValues" id="day1Max">Loading...</p>
+            </div>
+            <div class="icons">
+              <p class="weather" id="day2"></p>
+              <div class="image">
+                <img src="dots.png" class="imgClass" id="img2" />
+              </div>
+              <p class="minValues" id="day2Min">Loading...</p>
+              <p class="maxValues" id="day2Max">Loading...</p>
+            </div>
+            <div class="icons">
+              <p class="weather" id="day3"></p>
+              <div class="image">
+                <img src="dots.png" class="imgClass" id="img3" />
+              </div>
+              <p class="minValues" id="day3Min">Loading...</p>
+              <p class="maxValues" id="day3Max">Loading...</p>
+            </div>
+            <div class="icons">
+              <p class="weather" id="day4"></p>
+              <div class="image">
+                <img src="dots.png" class="imgClass" id="img4" />
+              </div>
+              <p class="minValues" id="day4Min">Loading...</p>
+              <p class="maxValues" id="day4Max">Loading...</p>
+            </div>
+            <div class="icons">
+              <p class="weather" id="day5"></p>
+              <div class="image">
+                <img src="dots.png" class="imgClass" id="img5" />
+              </div>
+              <p class="minValues" id="day5Min">Loading...</p>
+              <p class="maxValues" id="day5Max">Loading...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function GetInfo() {
+          var newName = document.getElementById("cityInput");
+          var cityName = document.getElementById("cityName");
+          cityName.innerHTML = newName.value;
+
+
+      fetch('https://api.openweathermap.org/data/2.5/forecast?q='+newName.value+'&lang=vi&appid=32ba0bfed592484379e51106cef3f204')
+      .then(response => response.json())
+      .then(data => {
+          const {humidity} = data.list[0].main;
+          const {sunrise, sunset} = data.city;
+          const { icon, description } = data.list[0].weather[0];
+          const { speed } = data.list[0].wind;
+          // const {temp} = data.list[0].main;
+          document.querySelector(".temp").innerText = Number(data.list[0].main.temp - 273.15).toFixed(1)+ "°";
+          document.querySelector(".icon").src =
+          "https://openweathermap.org/img/wn/" + icon + ".png";
+          document.querySelector(".description").innerText = description;
+            document.querySelector(".humidity").innerText =
+              "Độ ẩm: " + humidity + "%";
+            document.querySelector(".wind").innerText =
+              "Độ gió: " + speed + " m/s";
+          var mysunrise = new Date(1000 * sunrise);
+          var mysunset = new Date(1000 * sunset);
+          //var myDatetoday = new Date(1000*sunrise);
+          //myDatetoday.setTimezone(new DateTimeZone(myDatetoday));
+          //var myDatetoday = new Date(1000*sunrise).toTimeString();
+          //var dtm = new Date(msg.payload.sunrise * 1000);
+          //var str = dtm.getLocaleTimeString();
+          //var teste ={payload: msg.payload.sunrise};
+          //var mytoday = formatTime(Instant.ofEpochSecond(sunrise))
+
+          //Đặt Thứ, Ngày, Tháng
+          var day_name = mysunrise.getDay();
+          switch (day_name) {
+              case 0:
+                  day_name = "Chủ nhật";
+                  break;
+              case 1:
+                  day_name = "Thứ hai";
+                  break;
+              case 2:
+                  day_name = "Thứ ba";
+                  break;
+              case 3:
+                  day_name = "Thứ tư";
+                  break;
+              case 4:
+                  day_name = "Thứ năm";
+                  break;
+              case 5:
+                  day_name = "Thứ sáu";
+                  break;
+              case 6:
+                  day_name = "Thứ bảy";
+              }
+          var ngay_name = mysunrise.getDate();
+          var thang_name = mysunrise.getMonth();
+          document.querySelector(".monthday").innerText =
+            day_name + ", Ngày " + ngay_name + " Tháng " + thang_name;
+          // document.querySelector(".monthday").innerText =
+          //   data.list[0].dt;
+          //Đặt giờ mặt trời mọc, lặn
+          //Giờ
+          var hour_rise = "" + mysunrise.getHours();
+          let ho_rise = hour_rise.length;
+          if( ho_rise < 2){
+              hour_rise = "0" + hour_rise;
+          }
+          var hour_set = "" + mysunset.getHours();
+          let ho_set = hour_set.length;
+          if( ho_set < 2){
+              hour_set = "0" + hour_set;
+          }
+          //Phút
+          var minu_rise = "" + mysunrise.getMinutes();
+          let mi_rise = minu_rise.length;
+          if( mi_rise < 2){
+              minu_rise = "0" + minu_rise;
+          }
+          var minu_set = "" + mysunset.getMinutes();
+          let mi_set = minu_set.length;
+          if( mi_set < 2){
+              minu_set = "0" + minu_set;
+          }
+          document.querySelector(".sunrise").innerText =
+            "MT mọc: " + hour_rise + ":" + minu_rise;
+          document.querySelector(".sunset").innerText =
+            "MT lặn: " + hour_set + ":" + minu_set;
+          //Getting the min and max values for each day
+          for(i = 0; i<5; i++){
+              document.getElementById("day" + (i+1) + "Min").innerHTML = "Min: " + Number(data.list[i].main.temp_min - 273.15).toFixed(1)+ "°";
+              //Number(1.3450001).toFixed(2); // 1.35
+          }
+
+          for(i = 0; i<5; i++){
+              document.getElementById("day" + (i+1) + "Max").innerHTML = "Max: " + Number(data.list[i].main.temp_max - 273.15).toFixed(2) + "°";
+          }
+          //------------------------------------------------------------
+
+          //Getting Weather Icons
+          for(i = 0; i<5; i++){
+              document.getElementById("img" + (i+1)).src = "http://openweathermap.org/img/wn/"+
+              data.list[i].weather[0].icon
+              +".png";
+          }
+          //------------------------------------------------------------
+          console.log(data)
+
+
+      })
+
+      .catch(err => alert("Something Went Wrong: Try Checking Your Internet Coneciton"))
+      }
+
+      function DefaultScreen(){
+          document.getElementById("cityInput").defaultValue = "Hà Nội";
+          GetInfo();
+      }
+
+
+      //Getting and displaying the text for the upcoming five days of the week
+      var d = new Date();
+      var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",];
+
+      //Function to get the correct integer for the index of the days array
+      function CheckDay(day){
+          if(day + d.getDay() > 6){
+              return day + d.getDay() - 7;
+          }
+          else{
+              return day + d.getDay();
+          }
+      }
+
+          for(i = 0; i<5; i++){
+              document.getElementById("day" + (i+1)).innerHTML = weekday[CheckDay(i)];
+          }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<?php
+    error_reporting(0);
+
+    $doc = new DOMDocument();
+
+    $doc->load("https://vnexpress.net/rss/kinh-doanh.rss");
+
+    $articles = $doc->getElementsByTagName("item");
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Demo Tin Báo</title>
+    <style>
+        .article {
+            float: left;
+            width: 46%;
+            padding: 0 20px;
+            margin-bottom: 25px;
+            min-height: 480px;
+        }
+        .col {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            min-height: 480px;
+            box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+            background-color: #f1f1f1;
+        }
+        h3.title {
+            margin-left: 30px;
+            margin-right: 15px;
+            margin-top: 2.5rem;
+        }
+        p.timeup {
+            color: red;
+        }
+        .desc {
+            width: 80%;
+            height: 50%;
+        }
+        .desc img {
+            margin-bottom: 20px;
+            width: 100%;
+            height: 260px;
+        }
+    </style>
+</head>
+<body>
+    <?php
+        foreach($articles as $item) {
+            $title = $item->getElementsByTagName("title");
+            $description = $item->getElementsByTagName("description");
+            $link = $item->getElementsByTagName("link");
+            $pubDate = $item->getElementsByTagName("pubDate");
+    ?>
+    <div class="article">
+        <div class="col">
+            <h3 class="title">
+                <a href="<?php echo $link->item(0)->nodeValue; ?>" target="_bank">
+                    <?php echo $title->item(0)->nodeValue; ?>
+                </a>
+            </h3>
+	    <p class="timeup">
+                <?php echo $pubDate->item(0)->nodeValue; ?>
+            </p>
+            <p class="desc">
+                <?php echo $description->item(0)->nodeValue; ?>
+            </p>
+        </div>
+    </div>
+    <?php } ?>
+</body>
+</html>
